@@ -173,9 +173,10 @@ namespace CustomHandstate
         }
     }
 
-    [HarmonyPatch(typeof(Hand), "SetHandState")]
-    public static class SetHandStatePatch
+    [HarmonyPatch]
+    public static class HandPatch
     {
+        [HarmonyPatch(typeof(Hand), "SetHandState")]
         [HarmonyPrefix]
         public static bool Prefix(Hand __instance, HandState newHandState)
         {
@@ -191,6 +192,14 @@ namespace CustomHandstate
                 hand.handState = (HandState)idNew;
             }
             return false;
+        }
+
+        [HarmonyPatch(typeof(Hand), "Awake")]
+        [HarmonyPostfix]
+        public static void Postfix(Hand __instance)
+        {
+            if (__instance.transform.name == "Hand_Left") { __instance.handSide = BodySide.Left; }
+            else { __instance.handSide = BodySide.Right; }
         }
     }
 
