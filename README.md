@@ -5,8 +5,9 @@ The CustomHold.cs file contains a custom hand state example.
 # Instructions
 Members from ICustomHandState:
 ## Method
-- OnStateEnter: Calling when entering the hand state.
-- OnStateExit: Calling when exiting the hand state.
+- Initialize: Called in *CustomHand.Start()*.
+- OnStateEnter: Called when entering the hand state.
+- OnStateExit: Called when exiting the hand state.
 - FixedUpdate: Calling like *MonoBehaviour.FixedUpdate()*.
 ## Field
 - Id: The id of your hand state. Forbid less than 3.
