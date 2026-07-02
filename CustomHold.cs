@@ -10,6 +10,11 @@ namespace CustomHandState
         public string Name { get; } = "Template Hold";
         public Color RGB { get; } = Color.blue;
 
+        public void Initialize(CustomHand hand)
+        {
+            Debug.Log("[CustomHandState] Template holdstate initialized!");
+        }
+
         public void OnStateEnter(CustomHand hand)
         {
             Debug.Log("[CustomHandState] Template holdstate entered!");

@@ -74,6 +74,7 @@ namespace CustomHandstate
         string Name { get; }
         Color RGB { get; }
 
+        void Initialize(CustomHand hand);
         void OnStateEnter(CustomHand hand);
         void OnStateExit(CustomHand hand);
         void FixedUpdate(CustomHand hand);
@@ -82,6 +83,15 @@ namespace CustomHandstate
     public class CustomHand : Hand
     {
         public Dictionary<string, object> CustomHandStateData = new Dictionary<string, object>();
+
+        public override void Start()
+        {
+            base.Start();
+            foreach (ICustomHandState state in HandStateManager.AllHandStates.Values)
+            {
+                state.Initialize(this);
+            }
+        }
 
         private void FixedUpdate()
         {
