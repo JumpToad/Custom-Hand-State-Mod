@@ -8,7 +8,7 @@ Members from ICustomHandState:
 - Initialize: Called in *CustomHand.Start()*.
 - OnStateEnter: Called when entering the hand state.
 - OnStateExit: Called when exiting the hand state.
-- FixedUpdate: Calling like *MonoBehaviour.FixedUpdate()*.
+- FixedUpdate: Called in *CustomHand.FixedUpdate()*.
 ## Field
 - Id: The id of your hand state. Forbid less than 3.
 - Name: The display name of your hand state.
