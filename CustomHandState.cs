@@ -35,6 +35,7 @@ namespace CustomHandstate
 
         public static void Initialize()
         {
+            AllHandStates.Clear();
             foreach (LoadedModDll dlls in ModManager.loadedModDlls)
             {
                 Type[] types = dlls.modAssembly.GetTypes();
@@ -63,6 +64,11 @@ namespace CustomHandstate
                 handNew.handColliders = hand.handColliders;
                 handNew.handTrigger = hand.handTrigger;
                 handNew.placeholderGameObject = hand.placeholderGameObject;
+                if (hand.handMultiplayer)
+                {
+                    handNew.handMultiplayer = hand.handMultiplayer;
+                    handNew.handMultiplayer.hand = handNew;
+                }
                 DestroyImmediate(hand);
             }
         }
