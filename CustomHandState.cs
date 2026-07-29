@@ -20,6 +20,7 @@ namespace CustomHandstate
             GameObject go = new GameObject("HandStateManager");
             go.AddComponent<HandStateManager>();
             UnityEngine.Object.DontDestroyOnLoad(go);
+            HandStateManager.VanillaStatesCount = Enum.GetValues(typeof(HandState)).Length;
         }
 
         public static Color HexToColor(string hex)
@@ -32,6 +33,7 @@ namespace CustomHandstate
     public class HandStateManager : MonoBehaviour
     {
         public static Dictionary<int, ICustomHandState> AllHandStates { get; private set; } = new Dictionary<int, ICustomHandState>();
+        public static int VanillaStatesCount;
 
         public static void Initialize()
         {
@@ -111,12 +113,12 @@ namespace CustomHandstate
     public class HandStatePageManager : MonoBehaviour
     {
         private int currentPageIndex = 0;
-        private List<List<GameObject>> pages = new List<List<GameObject>>(4);
+        private List<List<GameObject>> pages = new List<List<GameObject>>(HandStateManager.VanillaStatesCount);
 
         private void Start()
         {
             pages.Add(transform.Cast<Transform>().Select(t => t.gameObject).ToList());
-            for (int i = 0; i < (HandStateManager.AllHandStates.Count + 3) / 4; i++)
+            for (int i = 0; i < (HandStateManager.AllHandStates.Count + (HandStateManager.VanillaStatesCount - 1)) / HandStateManager.VanillaStatesCount; i++)
             {
                 pages.Add(new List<GameObject>());
             }
@@ -128,7 +130,7 @@ namespace CustomHandstate
             {
                 foreach (List<GameObject> page in pages)
                 {
-                    if (page.Count < 4)
+                    if (page.Count < HandStateManager.VanillaStatesCount)
                     {
                         GameObject button = Instantiate(template, transform);
                         page.Add(button);
@@ -192,9 +194,9 @@ namespace CustomHandstate
             int idNew = (int)newHandState;
             if ((int)hand.handState != idNew)
             {
-                if ((int)hand.handState > 2) { HandStateManager.AllHandStates[(int)hand.handState].OnStateExit(hand); }
-                if (idNew > 2) { HandStateManager.AllHandStates[idNew].OnStateEnter(hand); }
-                if (idNew < 3) { return true; }
+                if ((int)hand.handState > HandStateManager.VanillaStatesCount - 1) { HandStateManager.AllHandStates[(int)hand.handState].OnStateExit(hand); }
+                if (idNew > HandStateManager.VanillaStatesCount - 1) { HandStateManager.AllHandStates[idNew].OnStateEnter(hand); }
+                if (idNew < HandStateManager.VanillaStatesCount) { return true; }
                 hand.handState = (HandState)idNew;
             }
             return false;
@@ -270,6 +272,10 @@ namespace CustomHandstate
                             else if (move.handState == HandState.NoHold)
                             {
                                 moveDotFromPool.dotImage.color = UISettings.HandNoHoldColor;
+                            }
+                            else if (move.handState == HandState.LooseHoldWithRotation)
+                            {
+                                moveDotFromPool.dotImage.color = UISettings.HandLooseHoldWithRotationColor;
                             }
                             else 
                             {
