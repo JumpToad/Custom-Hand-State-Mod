@@ -6,7 +6,7 @@ namespace CustomHandState
 {
     public class TemplateHold : ICustomHandState
     {
-        public int Id { get; } = 3;
+        public int Id { get; } = 4;
         public string Name { get; } = "Template Hold";
         public Color RGB { get; } = Color.blue;
 
