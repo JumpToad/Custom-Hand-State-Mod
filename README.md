@@ -10,6 +10,6 @@ Members from ICustomHandState:
 - OnStateExit: Called when exiting the hand state.
 - FixedUpdate: Called in *CustomHand.FixedUpdate()*.
 ## Field
-- Id: The id of your hand state. Forbid less than 3.
+- Id: The id of your hand state. Forbid less than 4.
 - Name: The display name of your hand state.
 - RGB: The color of the keyframe when the keyframe has a hand state value.
